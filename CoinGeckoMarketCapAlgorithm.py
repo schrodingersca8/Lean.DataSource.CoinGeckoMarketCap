@@ -19,7 +19,7 @@ from AlgorithmImports import *
 class CoinGeckoMarketCapAlgorithm(QCAlgorithm):
     def Initialize(self):
         ''' Initialise the data and resolution required, as well as the cash and start-end dates for your algorithm. All algorithms must initialized.'''
-        
+
         self.SetStartDate(2020, 10, 7)   #Set Start Date
         self.SetEndDate(2020, 10, 11)    #Set End Date
         self.crypto_symbol = self.AddEquity("BTCUSD", Resolution.Daily).Symbol
@@ -34,4 +34,3 @@ class CoinGeckoMarketCapAlgorithm(QCAlgorithm):
         if data:
             marketcap = data[self.custom_data_symbol]
             self.Log(marketcap.ToString())
-

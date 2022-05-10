@@ -60,7 +60,7 @@ namespace QuantConnect.DataSource
                     Globals.DataFolder,
                     "alternative",
                     "coingecko",
-		    "marketcap",
+                    "marketcap",
                     $"{config.Symbol.Value.ToLowerInvariant()}.csv"
                 ),
                 SubscriptionTransportMedium.LocalFile
@@ -80,14 +80,13 @@ namespace QuantConnect.DataSource
             var csv = line.Split(',');
 
             var parsedDate = Parse.DateTimeExact(csv[0], "yyyyMMdd");
-
-	    decimal marketcap = decimal.Parse(csv[1], NumberStyles.Any, CultureInfo.InvariantCulture);
+            decimal marketcap = decimal.Parse(csv[1], NumberStyles.Any, CultureInfo.InvariantCulture);
             return new CoinGeckoMarketCap
             {
                 Symbol = config.Symbol,
                 Time = parsedDate,
-		Value = marketcap,
-		Marketcap = marketcap
+                Value = marketcap,
+                Marketcap = marketcap
             };
         }
 
@@ -101,8 +100,8 @@ namespace QuantConnect.DataSource
             {
                 Symbol = Symbol,
                 Time = Time,
-		Value = Marketcap,
-		Marketcap = Marketcap
+                Value = Marketcap,
+                Marketcap = Marketcap
             };
         }
 
