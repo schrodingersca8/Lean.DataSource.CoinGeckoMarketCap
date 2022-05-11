@@ -50,8 +50,8 @@ namespace QuantConnect.DataLibrary.Tests
             var data = slice.Get<CoinGeckoMarketCap>();
             if (!data.IsNullOrEmpty())
             {
-               var marketcap = data[_customDataSymbol];
-	       Log($"{Time} :: {marketcap}");
+                var marketcap = data[_customDataSymbol];
+                Log($"{Time} :: {marketcap}");
             }
         }
 
