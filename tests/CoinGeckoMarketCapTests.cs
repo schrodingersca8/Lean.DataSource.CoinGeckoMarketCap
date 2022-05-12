@@ -91,8 +91,8 @@ namespace QuantConnect.DataLibrary.Tests
             {
                 Symbol = Symbol.Empty,
                 Time = DateTime.Today,
-		Value = 1000.25m,
-		Marketcap = 1000.25m
+                DataType = MarketDataType.Base,
+                SomeCustomProperty = "This is some market related information"
             };
         }
     }
