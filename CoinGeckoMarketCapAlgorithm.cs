@@ -28,7 +28,6 @@ namespace QuantConnect.DataLibrary.Tests
     public class CoinGeckoMarketCapAlgorithm : QCAlgorithm
     {
         private Symbol _customDataSymbol;
-        private Symbol _cryptoSymbol;
 
         /// <summary>
         /// Initialise the data and resolution required, as well as the cash and start-end dates for your algorithm. All algorithms must initialized.
@@ -37,7 +36,6 @@ namespace QuantConnect.DataLibrary.Tests
         {
             SetStartDate(2013, 10, 07);  //Set Start Date
             SetEndDate(2013, 10, 11);    //Set End Date
-            _cryptoSymbol = AddCrypto("BTCUSD").Symbol;
             _customDataSymbol = AddData<CoinGeckoMarketCap>("BTC").Symbol;
         }
 

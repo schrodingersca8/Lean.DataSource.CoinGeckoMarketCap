@@ -22,7 +22,6 @@ class CoinGeckoMarketCapAlgorithm(QCAlgorithm):
 
         self.SetStartDate(2020, 10, 7)   #Set Start Date
         self.SetEndDate(2020, 10, 11)    #Set End Date
-        self.crypto_symbol = self.AddEquity("BTCUSD", Resolution.Daily).Symbol
         self.custom_data_symbol = self.AddData(CoinGeckoMarketCap, "BTC").Symbol
 
     def OnData(self, slice):

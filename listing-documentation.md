@@ -10,7 +10,6 @@ class CoinGeckoMarketCapAlgorithm(QCAlgorithm):
         self.SetEndDate(2020, 10, 11)
         self.SetCash(100000)
 
-        var btcusd = self.AddEquity("BTCUSD", Resolution.Daily).Symbol
         var coingecko_marketcap_symbol = self.AddData(CoinGeckoMarketCap, "BTC").Symbol
 ```
 
@@ -26,7 +25,6 @@ namespace QuantConnect
             SetEndDate(2020, 10, 11);
             SetCash(100000);
 
-            var btcusd = AddCrypto("BTCUSD", Resolution.Daily).Symbol;
             var coingecko_marketcap_symbol = AddData<CoinGeckoMarketCap>("BTC").Symbol;
         }
     }

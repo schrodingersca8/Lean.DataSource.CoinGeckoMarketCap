@@ -15,14 +15,12 @@ CoinGecko provides a data platform, digital currency prices, and fundamental ana
 Python:
 ```
 # Requesting data:
-self.btcusd = self.AddCrypto("BTCUSD", Resolution.Daily).Symbol
 coingecko_marketcap_symbol = self.AddData(CoinGeckoMarketCap, "BTC").Symbol
 ```
 
 C#:
 ```
 // Requesting data:
-btcusd = AddCrypto("BTCUSD", Resolution.Daily).Symbol;
 coingecko_marketcap_symbol = AddData<CoinGeckoMarketCap>("BTC").Symbol;
 ```
 
