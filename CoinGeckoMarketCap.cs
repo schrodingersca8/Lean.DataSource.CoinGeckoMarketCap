@@ -15,6 +15,7 @@
 */
 
 using System;
+using System.Globalization;
 using NodaTime;
 using ProtoBuf;
 using System.IO;
@@ -30,10 +31,10 @@ namespace QuantConnect.DataSource
     public class CoinGeckoMarketCap : BaseData
     {
         /// <summary>
-        /// Some custom data property
+        /// Marketcap of the coin for that day
         /// </summary>
-        [ProtoMember(2000)]
-        public string SomeCustomProperty { get; set; }
+        [ProtoMember(12)]
+        public decimal Marketcap { get; set; }
 
         /// <summary>
         /// Time passed between the date of the data and the time the data became available to us
@@ -58,7 +59,8 @@ namespace QuantConnect.DataSource
                 Path.Combine(
                     Globals.DataFolder,
                     "alternative",
-                    "mycustomdatatype",
+                    "coingecko",
+                    "marketcap",
                     $"{config.Symbol.Value.ToLowerInvariant()}.csv"
                 ),
                 SubscriptionTransportMedium.LocalFile
@@ -78,11 +80,13 @@ namespace QuantConnect.DataSource
             var csv = line.Split(',');
 
             var parsedDate = Parse.DateTimeExact(csv[0], "yyyyMMdd");
+            decimal marketcap = decimal.Parse(csv[1], NumberStyles.Any, CultureInfo.InvariantCulture);
             return new CoinGeckoMarketCap
             {
                 Symbol = config.Symbol,
-                SomeCustomProperty = csv[1],
-                Time = parsedDate - Period,
+                Time = parsedDate,
+                Value = marketcap,
+                Marketcap = marketcap
             };
         }
 
@@ -96,8 +100,8 @@ namespace QuantConnect.DataSource
             {
                 Symbol = Symbol,
                 Time = Time,
-                EndTime = EndTime,
-                SomeCustomProperty = SomeCustomProperty,
+                Value = Marketcap,
+                Marketcap = Marketcap
             };
         }
 
@@ -107,7 +111,7 @@ namespace QuantConnect.DataSource
         /// <returns>false</returns>
         public override bool RequiresMapping()
         {
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -117,7 +121,7 @@ namespace QuantConnect.DataSource
         /// <returns>true</returns>
         public override bool IsSparseData()
         {
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -125,7 +129,7 @@ namespace QuantConnect.DataSource
         /// </summary>
         public override string ToString()
         {
-            return $"{Symbol} - {SomeCustomProperty}";
+            return $"{Symbol} - Marketcap :  {Marketcap}";
         }
 
         /// <summary>
@@ -153,4 +157,4 @@ namespace QuantConnect.DataSource
             return DateTimeZone.Utc;
         }
     }
-}   
+}

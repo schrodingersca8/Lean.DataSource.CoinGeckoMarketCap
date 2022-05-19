@@ -1,45 +1,44 @@
 ### Meta
-- **Dataset name**: *`datasetName`*
-- **Vendor name**: *`vendorName`*
-- **Vendor Website**: *`vendorWebsite`*
+- **Dataset name**: MarketCap
+- **Vendor name**: CoinGecko
+- **Vendor Website**: https://www.coingecko.com/
 
 
 ### Introduction
 
-*`datasetName`* by *`vendorName`* *`/is/tracks`* *`assetsInMarket`* *`datasetProperty`*. The data covers *`coverageNumber`* *`coverageAssetType`*, starting in *`startDate`*, and is delivered on a *`resolution`* frequency. This dataset is created by *`methodology`*. 
+MarketCap by CoinGecko provides marketcap data of the cryptocurrency coins. The dataset covers over 1300 crypto coins that have been listed on CoinGecko website. The data starts in April 2013 and is delivered on a daily frequency.
 
 ### About the Provider
-*`vendorName`* was founded by *`founderName(s)`* in *`foundingYear`*, with the goal of *`missionStatement`*. *`vendorName`* provides access to *`dataTypes`* for *`targetDemographic`*. 
+CoinGecko provides a data platform, digital currency prices, and fundamental analysis of the cryptocurrency market.CoinGecko was founded in 2014 by TM Lee (CEO) and Bobby Ong (COO) with the mission to democratize the access of crypto data and empower users with actionable insights.
 
 ### Getting Started
 Python:
 ```
-# pythonCodeToSubscribeToData
+# Requesting data:
+coingecko_marketcap_symbol = self.AddData(CoinGeckoMarketCap, "BTC").Symbol
 ```
 
 C#:
 ```
-// cSharpCodeToSubscribeToData
+// Requesting data:
+coingecko_marketcap_symbol = AddData<CoinGeckoMarketCap>("BTC").Symbol;
 ```
 
 ### Data Summary
-- **Start Date**: *`startDate`*
-- **Asset Coverage**: *`assetCoverage`*
-- **Resolution**: *`resolution(s)`*
-- **Data Density**: *`dataDensity`*
-- **Timezone**: *`timezone`*
+- **Start Date**: April 2013
+- **Asset Coverage**: Crypto Coins
+- **Resolution**: Daily
+- **Data Density**: Dense
+- **Timezone**: UTC
 
 
 ### Example Applications
 
-The *`vendorName`* *`datasetName`* enables researchers to accurately design strategies harnessing *`datasetProperties`*. Examples include:
+The CoinGeckoMarketCap dataset enables researchers to accurately design strategies harnessing marketcap of crypto coins. Examples include:
 
-- *`descriptionOfExampleStrategy1`*
-- *`descriptionOfExampleStrategy2`*
-- *`descriptionOfExampleStrategyN`*
+- As a key statistic, it can indicate the growth potential of a cryptocurrency and whether it is safe to buy, compared to others.
+- Investors seeking to add another element to their investment strategies, weighted market cap assessments can be helpful.
 
 ### Data Point Attributes
 
-- *`DataSourceClassName1`*
-- *`DataSourceClassName2`*
-- *`DataSourceClassNameN`*
+- Marketcap : decimal
