@@ -37,6 +37,7 @@ class CoinGeckoMarketCapDataDownloader:
                 try:
                     req_start_time = time.time()
                     coin_history = self.HttpRequester(f"{coin_id}/market_chart?vs_currency=usd&days=max&interval=daily")['market_caps']
+                    del coin_history[-1]
                     req_end_time = time.time()
                     req_time = req_end_time - req_start_time
                     time.sleep(max(total_time - req_time, 0))
