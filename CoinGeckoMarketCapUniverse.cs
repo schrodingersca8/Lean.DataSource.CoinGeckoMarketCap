@@ -105,7 +105,7 @@ namespace QuantConnect.DataSource
         /// </summary>
         public override string ToString()
         {
-            return $"{Symbol} - Marketcap : {Marketcap}";
+            return $"{Symbol} - {Value}";
         }
 
         /// <summary>
