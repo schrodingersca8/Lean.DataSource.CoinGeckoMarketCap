@@ -14,9 +14,15 @@ db_file = "../Lean/Data/symbol-properties/symbol-properties-database.csv"
 class CoinGeckoMarketCapDataDownloader:
     def __init__(self, destinationFolder, db_file, apiKey = None):
         self.destinationFolder = destinationFolder
+        self.universeFolder = os.path.join(self.destinationFolder, "universe")
         self.symbol_id = self.preprocess(db_file)
-      
+
+        if os.path.exists(self.universeFolder):
+            shutil.rmtree(self.universeFolder)
+    
         pathlib.Path(self.destinationFolder).mkdir(parents=True, exist_ok=True)
+        pathlib.Path(self.universeFolder).mkdir(parents=True, exist_ok=True)
+      
         
     def Run(self):
 
@@ -26,7 +32,6 @@ class CoinGeckoMarketCapDataDownloader:
             print(f'Processing coin: {symbol}')
             trial = 5
             total_time = 1.4
-            standard_sleep = 0.15
 
             while trial != 0:
                 try:
@@ -34,7 +39,7 @@ class CoinGeckoMarketCapDataDownloader:
                     coin_history = self.HttpRequester(f"{coin_id}/market_chart?vs_currency=usd&days=max&interval=daily")['market_caps']
                     req_end_time = time.time()
                     req_time = req_end_time - req_start_time
-                    time.sleep(max(total_time - req_time, standard_sleep))
+                    time.sleep(max(total_time - req_time, 0))
 
                     if len(coin_history) == 0:
                         print(f'No data for: {symbol}')
@@ -48,6 +53,9 @@ class CoinGeckoMarketCapDataDownloader:
                         market_cap = data_point[1]
 
                         lines.append(','.join([date, str(market_cap)]))
+
+                        with open( os.path.join(self.universeFolder, f'{date}.csv'), 'a') as universe_file:
+                            universe_file.write(f'{symbol},{market_cap}\n')
 
                     with open(filename, 'w') as coin_file:
                         coin_file.write('\n'.join(lines))
@@ -63,6 +71,7 @@ class CoinGeckoMarketCapDataDownloader:
 
     def preprocess(self, db_file):
 
+        start = time.time()
         print('Creating a map of list from API')
         coins = self.HttpRequester("list")
 
@@ -109,13 +118,12 @@ class CoinGeckoMarketCapDataDownloader:
                 print(f"Pre-Processing for {symbol}'s coin : {coin_id}")
                 trial = 5
                 total_time = 1.4
-                standard_sleep = 0.15
                 while trial != 0:
                     try:
                         start_time = time.time()
                         history = self.HttpRequester(f"{coin_id}/market_chart?vs_currency=usd&days=max&interval=daily")['market_caps']
                         req_time = time.time() - start_time
-                        time.sleep(max(total_time - req_time, standard_sleep))
+                        time.sleep(max(total_time - req_time, 0))
                         latest_marketcap = history[-1][1]
                         if(latest_marketcap >= max_marketcap):
                             max_marketcap = latest_marketcap
@@ -129,6 +137,9 @@ class CoinGeckoMarketCapDataDownloader:
                         trial -= 1
             req_symbol_id[symbol] = req_coin_id
             print(f'Finished Pre-Processing for {symbol}')
+
+        req_time = time.time() - start
+        print(f"Total time for preprocessing : {req_time}")
 
         return req_symbol_id
 
