@@ -38,7 +38,7 @@ namespace QuantConnect.DataSource
         /// <summary>
         /// Time passed between the date of the data and the time the data became available to us
         /// </summary>
-        public TimeSpan Period { get; set; } = TimeSpan.FromDays(1);
+        private TimeSpan Period { get; set; } = TimeSpan.FromDays(1);
 
         /// <summary>
         /// Time the data became available
