@@ -83,7 +83,7 @@ namespace QuantConnect.DataSource
         public override BaseData Reader(SubscriptionDataConfig config, string line, DateTime date, bool isLiveMode)
         {
             var csv = line.Split(','); 
-            var coin = csv[0];
+            var coin = csv[0].ToUpperInvariant();
             var marketcap = decimal.Parse(csv[1], NumberStyles.Any, CultureInfo.InvariantCulture); 
 
             return new CoinGeckoMarketCapUniverse
@@ -111,7 +111,7 @@ namespace QuantConnect.DataSource
         /// </summary>
         public override string ToString()
         {
-            return $"{Symbol}.{Coin} - Marketcap : {Marketcap}";
+            return $"{Coin}.{Symbol} - Marketcap : {Marketcap}";
         }
 
         /// <summary>
