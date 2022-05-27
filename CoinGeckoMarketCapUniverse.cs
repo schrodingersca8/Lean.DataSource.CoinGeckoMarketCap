@@ -1,4 +1,4 @@
-/*
+﻿/*
  * QUANTCONNECT.COM - Democratizing Finance, Empowering Individuals.
  * Lean Algorithmic Trading Engine v2.0. Copyright 2014 QuantConnect Corporation.
  *
@@ -15,12 +15,12 @@
 */
 
 using System;
-using System.Globalization;
 using NodaTime;
 using ProtoBuf;
 using System.IO;
 using QuantConnect.Data;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace QuantConnect.DataSource
 {
@@ -28,18 +28,22 @@ namespace QuantConnect.DataSource
     /// Example custom data type
     /// </summary>
     [ProtoContract(SkipConstructor = true)]
-    public class CoinGeckoMarketCap : BaseData
+    public class CoinGeckoMarketCapUniverse : BaseData
     {
         /// <summary>
-        /// Marketcap of the coin for that day
+        /// Coin Name
         /// </summary>
-        [ProtoMember(12)]
+        public string Coin { get; set; }
+        
+        /// <summary>
+        /// Marketcap of the coin
+        /// </summary>
         public decimal Marketcap { get; set; }
 
         /// <summary>
         /// Time passed between the date of the data and the time the data became available to us
         /// </summary>
-        public TimeSpan _period { get; set; } = TimeSpan.FromDays(1);
+        private TimeSpan _period { get; set; } = TimeSpan.FromDays(1);
 
         /// <summary>
         /// Time the data became available
@@ -61,7 +65,8 @@ namespace QuantConnect.DataSource
                     "alternative",
                     "coingecko",
                     "marketcap",
-                    $"{config.Symbol.Value.ToLowerInvariant()}.csv"
+                    "universe",
+                    $"{date.ToStringInvariant(DateFormat.EightCharacter)}.csv"
                 ),
                 SubscriptionTransportMedium.LocalFile
             );
@@ -77,41 +82,18 @@ namespace QuantConnect.DataSource
         /// <returns>New instance</returns>
         public override BaseData Reader(SubscriptionDataConfig config, string line, DateTime date, bool isLiveMode)
         {
-            var csv = line.Split(',');
+            var csv = line.Split(','); 
+            var coin = csv[0].ToUpperInvariant();
+            var marketcap = decimal.Parse(csv[1], NumberStyles.Any, CultureInfo.InvariantCulture); 
 
-            var parsedDate = Parse.DateTimeExact(csv[0], "yyyyMMdd");
-            decimal marketcap = decimal.Parse(csv[1], NumberStyles.Any, CultureInfo.InvariantCulture);
-            return new CoinGeckoMarketCap
+            return new CoinGeckoMarketCapUniverse
             {
                 Symbol = config.Symbol,
-                Time = parsedDate,
-                Value = marketcap,
-                Marketcap = marketcap
+                Coin = coin,
+                Marketcap = marketcap,
+                Time =  date - _period,
+                Value = marketcap
             };
-        }
-
-        /// <summary>
-        /// Clones the data
-        /// </summary>
-        /// <returns>A clone of the object</returns>
-        public override BaseData Clone()
-        {
-            return new CoinGeckoMarketCap
-            {
-                Symbol = Symbol,
-                Time = Time,
-                Value = Marketcap,
-                Marketcap = Marketcap
-            };
-        }
-
-        /// <summary>
-        /// Indicates whether the data source is tied to an underlying symbol and requires that corporate events be applied to it as well, such as renames and delistings
-        /// </summary>
-        /// <returns>false</returns>
-        public override bool RequiresMapping()
-        {
-            return false;
         }
 
         /// <summary>
@@ -129,7 +111,7 @@ namespace QuantConnect.DataSource
         /// </summary>
         public override string ToString()
         {
-            return $"{Symbol} - Marketcap :  {Marketcap}";
+            return $"{Coin}.{Symbol} - Marketcap : {Marketcap}";
         }
 
         /// <summary>
