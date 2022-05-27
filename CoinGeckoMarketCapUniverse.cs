@@ -83,12 +83,13 @@ namespace QuantConnect.DataSource
         public override BaseData Reader(SubscriptionDataConfig config, string line, DateTime date, bool isLiveMode)
         {
             var csv = line.Split(','); 
-
+            var coin = csv[0];
             var marketcap = decimal.Parse(csv[1], NumberStyles.Any, CultureInfo.InvariantCulture); 
 
             return new CoinGeckoMarketCapUniverse
             {
                 Symbol = config.Symbol,
+                Coin = coin,
                 Marketcap = marketcap,
                 Time =  date - _period,
                 Value = marketcap
