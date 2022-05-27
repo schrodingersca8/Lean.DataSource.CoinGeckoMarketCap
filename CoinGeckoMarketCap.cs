@@ -39,12 +39,12 @@ namespace QuantConnect.DataSource
         /// <summary>
         /// Time passed between the date of the data and the time the data became available to us
         /// </summary>
-        public TimeSpan Period { get; set; } = TimeSpan.FromDays(1);
+        public TimeSpan _period { get; set; } = TimeSpan.FromDays(1);
 
         /// <summary>
         /// Time the data became available
         /// </summary>
-        public override DateTime EndTime => Time + Period;
+        public override DateTime EndTime => Time + _period;
 
         /// <summary>
         /// Return the URL string source of the file. This will be converted to a stream
@@ -121,7 +121,7 @@ namespace QuantConnect.DataSource
         /// <returns>true</returns>
         public override bool IsSparseData()
         {
-            return false;
+            return true;
         }
 
         /// <summary>
