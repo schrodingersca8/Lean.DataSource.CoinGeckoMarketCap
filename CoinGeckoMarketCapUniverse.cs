@@ -43,12 +43,12 @@ namespace QuantConnect.DataSource
         /// <summary>
         /// Time passed between the date of the data and the time the data became available to us
         /// </summary>
-        private TimeSpan Period { get; set; } = TimeSpan.FromDays(1);
+        private TimeSpan _period { get; set; } = TimeSpan.FromDays(1);
 
         /// <summary>
         /// Time the data became available
         /// </summary>
-        public override DateTime EndTime => Time + Period;
+        public override DateTime EndTime => Time + _period;
 
         /// <summary>
         /// Return the URL string source of the file. This will be converted to a stream
@@ -90,7 +90,7 @@ namespace QuantConnect.DataSource
             {
                 Symbol = config.Symbol,
                 Marketcap = marketcap,
-                Time =  date - Period,
+                Time =  date - _period,
                 Value = marketcap
             };
         }
@@ -110,7 +110,7 @@ namespace QuantConnect.DataSource
         /// </summary>
         public override string ToString()
         {
-            return $"{Symbol} - Marketcap : {Marketcap}";
+            return $"{Symbol}.{Coin} - Marketcap : {Marketcap}";
         }
 
         /// <summary>
