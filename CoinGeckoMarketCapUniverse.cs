@@ -31,6 +31,11 @@ namespace QuantConnect.DataSource
     public class CoinGeckoMarketCapUniverse : BaseData
     {
         /// <summary>
+        /// Coin Name
+        /// </summary>
+        public string Coin { get; set; }
+        
+        /// <summary>
         /// Marketcap of the coin
         /// </summary>
         public decimal Marketcap { get; set; }
