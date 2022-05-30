@@ -40,6 +40,11 @@ namespace QuantConnect.DataSource
         /// </summary>
         public decimal Marketcap { get; set; }
 
+	/// <summary>
+        /// TVL of the coin
+        /// </summary>
+        public decimal TotalVolumeLocked { get; set; }
+
         /// <summary>
         /// Time passed between the date of the data and the time the data became available to us
         /// </summary>
@@ -85,6 +90,7 @@ namespace QuantConnect.DataSource
             var csv = line.Split(','); 
             var coin = csv[0].ToUpperInvariant();
             var marketcap = decimal.Parse(csv[1], NumberStyles.Any, CultureInfo.InvariantCulture); 
+	    var tvl = decimal.Parse(csv[2], NumberStyles.Any, CultureInfo.InvariantCulture);
 
             return new CoinGeckoMarketCapUniverse
             {
@@ -92,7 +98,8 @@ namespace QuantConnect.DataSource
                 Coin = coin,
                 Marketcap = marketcap,
                 Time =  date - _period,
-                Value = marketcap
+                Value = marketcap,
+		TotalVolumeLocked = tvl
             };
         }
 

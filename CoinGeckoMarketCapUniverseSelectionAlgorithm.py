@@ -37,7 +37,7 @@ class CoinGeckoMarketCapUniverseSelectionAlgorithm(QCAlgorithm):
         :return: List of Symbol objects '''
 
         for datum in data:
-            self.Log(f"{datum.Symbol},{datum.Coin},{datum.Marketcap}")
+            self.Log(f"{datum.Symbol},{datum.Coin},{datum.Marketcap},{datum.TotalVolumeLocked}")
         
         # define our selection criteria
         return [Symbol.Create($"{d.Coin}USD", SecurityType.Crypto, Market.GDAX); for d in data if d.Marketcap > 200000]
