@@ -89,17 +89,17 @@ namespace QuantConnect.DataSource
         {
             var csv = line.Split(','); 
             var coin = csv[0].ToUpperInvariant();
-            var marketcap = decimal.Parse(csv[1], NumberStyles.Any, CultureInfo.InvariantCulture); 
-	    var tvl = decimal.Parse(csv[2], NumberStyles.Any, CultureInfo.InvariantCulture);
+            var marketCap = decimal.Parse(csv[1], NumberStyles.Any, CultureInfo.InvariantCulture); 
+	    var totalVolumeLocked = decimal.Parse(csv[2], NumberStyles.Any, CultureInfo.InvariantCulture);
 
             return new CoinGeckoMarketCapUniverse
             {
                 Symbol = config.Symbol,
                 Coin = coin,
-                Marketcap = marketcap,
+                Marketcap = marketCap,
                 Time =  date - _period,
-                Value = marketcap,
-		TotalVolumeLocked = tvl
+                Value = marketCap,
+		TotalVolumeLocked = totalVolumeLocked
             };
         }
 
