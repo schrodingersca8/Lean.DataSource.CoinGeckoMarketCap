@@ -36,12 +36,12 @@ namespace QuantConnect.DataSource
         public string Coin { get; set; }
         
         /// <summary>
-        /// Marketcap of the coin
+        /// Marketcap of the coin for the given day
         /// </summary>
         public decimal Marketcap { get; set; }
 
 	/// <summary>
-        /// TVL of the coin
+        /// The total volume locked of the coin for the given day
         /// </summary>
         public decimal TotalVolumeLocked { get; set; }
 
