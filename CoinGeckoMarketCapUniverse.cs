@@ -36,9 +36,14 @@ namespace QuantConnect.DataSource
         public string Coin { get; set; }
         
         /// <summary>
-        /// Marketcap of the coin
+        /// Marketcap of the coin for the given day
         /// </summary>
         public decimal Marketcap { get; set; }
+
+	/// <summary>
+        /// The total volume locked of the coin for the given day
+        /// </summary>
+        public decimal TotalVolumeLocked { get; set; }
 
         /// <summary>
         /// Time passed between the date of the data and the time the data became available to us
@@ -84,15 +89,17 @@ namespace QuantConnect.DataSource
         {
             var csv = line.Split(','); 
             var coin = csv[0].ToUpperInvariant();
-            var marketcap = decimal.Parse(csv[1], NumberStyles.Any, CultureInfo.InvariantCulture); 
+            var marketCap = decimal.Parse(csv[1], NumberStyles.Any, CultureInfo.InvariantCulture); 
+	    var totalVolumeLocked = decimal.Parse(csv[2], NumberStyles.Any, CultureInfo.InvariantCulture);
 
             return new CoinGeckoMarketCapUniverse
             {
                 Symbol = config.Symbol,
                 Coin = coin,
-                Marketcap = marketcap,
+                Marketcap = marketCap,
                 Time =  date - _period,
-                Value = marketcap
+                Value = marketCap,
+		TotalVolumeLocked = totalVolumeLocked
             };
         }
 

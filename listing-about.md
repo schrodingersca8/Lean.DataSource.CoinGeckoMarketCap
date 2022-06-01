@@ -28,7 +28,7 @@ coingecko_marketcap_symbol = AddData<CoinGeckoMarketCap>("BTC").Symbol;
 - **Start Date**: April 2013
 - **Asset Coverage**: Crypto Coins
 - **Resolution**: Daily
-- **Data Density**: Dense
+- **Data Density**: Regular
 - **Timezone**: UTC
 
 
